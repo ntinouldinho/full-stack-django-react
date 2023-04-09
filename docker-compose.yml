@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  django:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+
+  react:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "4040:3000"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  celery:
+    build: ./backend
+    command: celery -A api worker -l info -P eventlet
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - rabbitmq
