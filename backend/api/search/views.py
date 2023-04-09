@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
-from .models import Search
+from .models import Search, WeatherData
 from django.core.serializers import serialize
 import jwt
 
@@ -19,6 +19,8 @@ def search(request):
         data = json.loads(request.body.decode('utf-8'))
         
         search = Search(user_id=decoded_token['sub'], city=data.get('city'), ip=request.META.get('REMOTE_ADDR'))
+
+
         try:
             search.save()
         except Exception as e:
@@ -63,3 +65,23 @@ def history(request):
             
         return JsonResponse(data, safe=False)
     
+
+@csrf_exempt
+def store(request):
+
+    decoded_token = request.jwt_token
+
+    if request.method == 'POST':
+        
+        data = json.loads(request.body.decode('utf-8'))
+        
+        store = WeatherData(user_id=decoded_token['sub'], city=data.get('city'), ip=request.META.get('REMOTE_ADDR'),)
+
+        store.set_data(data.get('data'))
+        
+        try:
+            store.save()
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+        return JsonResponse({'success': True})
