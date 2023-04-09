@@ -34,18 +34,15 @@ def create_notification(request):
         city = data.get('city')
         email = data.get('email')
         date = data.get('date').replace('T',' ')[:-5]
-        # london_tz = pytz.timezone('Europe/Athens')
-        # london_dt = london_tz.localize(send_time)
-        # send_time = london_dt.astimezone(pytz.UTC)
         
         notification = EmailSchedule(
                 email=email,
                 user_id=decoded_token['sub'],
                 city=city,
+                send_time=date
         )
         try:
             notification.save()
-
             send_search_results_email.apply_async(args=[notification.id],eta=date)
 
             return JsonResponse({'success': True})
