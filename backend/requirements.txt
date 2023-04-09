@@ -16,6 +16,7 @@ colorama==0.4.6
 cryptography==40.0.1
 Django==4.0.10
 django-cors-headers==3.14.0
+djangorestframework==3.14.0
 dnspython==2.3.0
 eventlet==0.33.3
 greenlet==2.0.2
