@@ -13,7 +13,9 @@ export const WeatherPage = () => {
 
   const fetchWeatherData = async () => {
     const accessToken = await getAccessTokenSilently();
-    const data = await fetchWeatherDataAPI(cities,accessToken)
+    let data = await fetchWeatherDataAPI(cities,accessToken)
+    data=data.filter((value) => value !== undefined);
+    
     setWeatherData(data);
 
   };
@@ -85,7 +87,7 @@ export const WeatherPage = () => {
       <div style={{display: 'flex',flexDirection: 'row'}}>
       {weatherData.map((data) => (
         <Weather key={data.name} data={data} onRemove={removeCity} onAddNotification={addNotificationFunc}/>
-      ))}
+))}
       </div>
     </PageLayout>
   );

@@ -123,10 +123,12 @@ export const fetchWeatherDataAPI = async (cities, accessToken) => {
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=3579138b0fe249866d7145e5314136ef`
           );
           const data = await response.json();
-          
+
+          if(data.cod==404) return;
+
           const storeDara = await storeData(city, data, accessToken)
 
-          return { ...data, name: city };
+          return { ...data, name: city};
         })
       );
 }
