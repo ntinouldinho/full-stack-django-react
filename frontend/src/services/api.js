@@ -77,6 +77,22 @@ export const deleteSearch = async (city, accessToken) => {
     })).json()
 }
 
+export const storeData = async (city, info, accessToken) => {
+  const data = {
+      city: city,
+      data: info,
+    };
+
+  return await (
+      await fetch(`/store/`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      }
+  })).json()
+}
 
 export const addNotification = async (email, city, date, accessToken) => {
 
@@ -100,13 +116,16 @@ export const addNotification = async (email, city, date, accessToken) => {
 }
 
 
-export const fetchWeatherDataAPI = async (cities) => {
+export const fetchWeatherDataAPI = async (cities, accessToken) => {
     return Promise.all(
         cities.map(async (city) => {
           const response = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=3579138b0fe249866d7145e5314136ef`
           );
           const data = await response.json();
+          
+          const storeDara = await storeData(city, data, accessToken)
+
           return { ...data, name: city };
         })
       );

@@ -12,9 +12,10 @@ export const WeatherPage = () => {
   const { user, getAccessTokenSilently } = useAuth0();
 
   const fetchWeatherData = async () => {
-    
-    const data = await fetchWeatherDataAPI(cities)
+    const accessToken = await getAccessTokenSilently();
+    const data = await fetchWeatherDataAPI(cities,accessToken)
     setWeatherData(data);
+
   };
 
   useEffect(() => {
