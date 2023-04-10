@@ -78,4 +78,16 @@ def delete_user(request,user_id):
 
 
 
-   
+def check_permission(request):
+
+    decoded_token = request.jwt_token
+
+    if request.method == 'GET':
+
+        if decoded_token.get("permissions"):
+            if 'read:users' in decoded_token['permissions']:
+                return JsonResponse({'status': 'success'}, status=200)
+            else:
+                return JsonResponse({'status': 'error', 'message': 'incorrect permissions set'}, status=404)
+        else:
+                return JsonResponse({'status': 'error', 'message': 'incorrect permissions set'}, status=404)

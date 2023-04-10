@@ -8,6 +8,7 @@ import {getUsers, deleteUser} from '../services/api'
 
 export const AllUsersPage = () => {
   const [users, setUsers] = useState([]);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   
@@ -18,8 +19,13 @@ export const AllUsersPage = () => {
       const accessToken = await getAccessTokenSilently();
       
       const data = await getUsers(accessToken)
+      if(!data.error){
+        setUsers(data);
+        setIsAuthorized(true)
+      }
+      
+      
 
-      setUsers(data);
       if (!isMounted) {
         return;
       }

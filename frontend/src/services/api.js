@@ -36,6 +36,18 @@ export const deleteUser = async (user_id, accessToken) => {
 
 }
 
+export const check = async (accessToken) => {
+  return await (
+      await fetch(`/check`, {
+      method: "GET",
+      headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`
+      },
+    }))
+
+}
+
 
 export const postSearch = async (city, accessToken) => {
     const data = {
