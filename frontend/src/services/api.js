@@ -136,9 +136,9 @@ export const fetchWeatherDataAPI = async (cities, accessToken) => {
           );
           const data = await response.json();
 
-          if(data.cod==404) return;
+          if(data.cod===404) return;
 
-          const storeDara = await storeData(city, data, accessToken)
+          await storeData(city, data, accessToken)
 
           return { ...data, name: city};
         })

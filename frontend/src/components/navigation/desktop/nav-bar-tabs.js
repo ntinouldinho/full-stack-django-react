@@ -4,7 +4,7 @@ import { NavBarTab } from "./nav-bar-tab";
 import {check} from '../../../services/api'
 
 export const NavBarTabs = () => {
-  const { user, isAuthenticated,getAccessTokenSilently } = useAuth0();
+  const {isAuthenticated,getAccessTokenSilently } = useAuth0();
   
   const [isAuthorized, setIsAuthorized] = useState(false);
   
@@ -15,13 +15,13 @@ export const NavBarTabs = () => {
       
       const data = await check(accessToken);
       
-      data.status==404?setIsAuthorized(false):setIsAuthorized(true);
+      data.status===404?setIsAuthorized(false):setIsAuthorized(true);
       
     };
 
     checkPermission();
 
-  }, []);
+  }, [getAccessTokenSilently]);
 
 
   return (
