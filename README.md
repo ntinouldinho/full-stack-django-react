@@ -1,7 +1,17 @@
 # full-stack-django-react
 
-1) "npm install" and "npm start" in the frontend folder
-2) "pip install -r requirements.txt" in the backend folder
-2) "python manage.py migrate" and "python manage.py runserver" in the backend folder
-3) "rabbitmq-server" in a new CMD
-4) "celery -A api worker -l info -P eventlet" in a new CMD
+You will need 4 CMDs open:
+1) Frontend:
+   1. Install the needed dependencies with `npm install`
+   2. Start the app with `npm start`
+
+2) Backend:
+   1. Install the needed dependencies with `pip install -r requirements.txt`
+   2. Migrate the database with `python manage.py migrate`
+   3. Start the server with `python manage.py runserver`
+
+3)Rabbitmq
+   1. Run `rabbitmq-server` 
+ 
+4) Celery:
+   1.Run `celery -A api worker -l info -P eventle`" 
