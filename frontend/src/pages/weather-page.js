@@ -14,7 +14,7 @@ export const WeatherPage = () => {
   const fetchWeatherData = async () => {
     const accessToken = await getAccessTokenSilently();
     let data = await fetchWeatherDataAPI(cities,accessToken)
-    data=data.filter((value) => value !== undefined);
+    data=data.filter((value) => value.cod !== '404');
     
     setWeatherData(data);
 
